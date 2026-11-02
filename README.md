@@ -48,3 +48,25 @@ Todo el código está en `www/index.html`. Si cambias archivos, sube el número 
 ## Logo
 
 Archivos fuente en `brand/` (`logo.svg`, `logo-1024.png`). Los íconos de Android están en `resources/android-res/` y los de la web en `www/icons/`.
+
+## Funciones solo de Android (v2.7)
+
+- **Recordatorio de turnos**: usa `@capacitor/local-notifications` (ya está en `package.json`).
+- **WhatsApp directo**: plugin propio en `native/android/WhatsAppSharePlugin.java`.
+  El workflow de Android ejecuta `scripts/android-native.js` después de `npx cap add android`,
+  que copia el plugin y lo registra en `MainActivity`.
+- La versión web (iPhone / PWA) usa los mismos archivos de `www/`: esas funciones se ocultan solas fuera de Android.
+
+## Recibir PDF desde otras apps (v2.8)
+
+- **Android (APK):** en cualquier app, al compartir un PDF aparece **Asignaciones**. Se carga como planilla
+  (reemplaza la anterior). Plugin: `native/android/PdfSharePlugin.java`; el filtro de compartir se agrega
+  al manifiesto con `scripts/android-native.js`.
+- **Web instalada (Chrome/Edge en Android o PC):** funciona con `share_target` del `manifest.webmanifest` y `www/sw.js`.
+- **iPhone:** Safari no permite que una web instalada aparezca en el menú Compartir. Ahí se sigue subiendo el PDF
+  desde Configuración. Para tenerlo en iPhone haría falta una app iOS nativa.
+
+## Firma fija del APK
+
+`resources/signing/debug.keystore` se copia a `~/.android/` antes de compilar, así todos los APK
+quedan firmados con la misma clave y Android los instala como actualización (sin desinstalar).
