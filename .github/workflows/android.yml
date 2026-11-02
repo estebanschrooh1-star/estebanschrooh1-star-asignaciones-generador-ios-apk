@@ -34,6 +34,14 @@ jobs:
       - name: Aplicar logo de la app
         run: cp -r resources/android-res/. android/app/src/main/res/
 
+      - name: Agregar funciones nativas (WhatsApp directo)
+        run: node scripts/android-native.js
+
+      - name: Usar clave de firma fija (para poder actualizar la app sin desinstalar)
+        run: |
+          mkdir -p ~/.android
+          cp resources/signing/debug.keystore ~/.android/debug.keystore
+
       - name: Compilar APK
         working-directory: android
         env:
