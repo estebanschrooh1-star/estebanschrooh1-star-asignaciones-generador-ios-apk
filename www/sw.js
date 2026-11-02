@@ -1,6 +1,6 @@
 // Service worker: permite usar la app sin conexión una vez instalada.
 // Si cambias archivos de la app, sube el número de VERSION para forzar la actualización.
-const VERSION = "asig-v8";
+const VERSION = "asig-v10";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png",
   "icons/apple-touch-icon.png", "icons/favicon.png", "vendor/pdf.min.js", "vendor/pdf.worker.min.js"];
 

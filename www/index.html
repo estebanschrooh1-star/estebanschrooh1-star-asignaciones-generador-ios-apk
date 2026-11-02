@@ -114,7 +114,7 @@ dialog[open]{animation:pop .25s}dialog[open]::backdrop{animation:fade .25s}dialo
 input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;text-align:left}input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and-time-value{text-align:left;min-height:1.3em}
 .sh{display:flex;align-items:center;justify-content:space-between;gap:8px}.sh .sub{margin:12px 4px 10px}
 .cb2{width:34px;height:34px;border-radius:50%;background:rgba(140,148,165,.38);color:var(--tx);display:inline-flex;align-items:center;justify-content:center;flex:none;margin-right:2px}.cb2 svg{width:24px;height:24px;transition:transform .38s cubic-bezier(.3,.9,.3,1)}.cb2.off svg{transform:rotate(-90deg)}
-.cl2{display:grid;grid-template-rows:1fr;transition:grid-template-rows .38s cubic-bezier(.3,.8,.3,1)}.cl2>.in2{min-height:0}.cl2.mv>.in2,.cl2.off>.in2{overflow:hidden}.cl2.off{grid-template-rows:0fr}.cl2.off>.in2{visibility:hidden;transition:visibility 0s .38s}
+.cl2{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:1fr;transition:grid-template-rows .38s cubic-bezier(.3,.8,.3,1)}.cl2>.in2{min-height:0;min-width:0}.cl2.mv>.in2,.cl2.off>.in2{overflow:hidden}.cl2.off{grid-template-rows:0fr}.cl2.off>.in2{visibility:hidden;transition:visibility 0s .38s}
 .rowb{display:flex;align-items:center;gap:12px;width:100%;text-align:left;color:var(--tx);margin-bottom:12px}.rowb small{color:var(--mu);display:block}.chv{width:26px;height:26px;color:var(--mu);flex:none}
 .rowc{display:flex;align-items:center;gap:12px}.rowc .stt{margin:0}.rowc .br{margin:0;flex:none}.rowc .br .btn{width:auto;padding:12px 16px}.rowc .ib{width:48px}
 .tg{margin-top:24px}.tg .row{padding:10px 4px}.kb .wrap{padding-bottom:55vh}
@@ -130,8 +130,8 @@ input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webk
 <button class="ic ig" id="cf" aria-label="Configuración" data-tip="Configuración"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg></button>
 <button class="ic ig" id="rs" aria-label="Reiniciar todo" data-tip="Reiniciar todo"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6.5 12 11V8a5 5 0 11-5 5H5a7 7 0 107-8z"/></svg></button></div></div>
 <div class="wrap"><div class="rb hide" id="rb"></div><label class="l" for="wk">Semana del PDF</label><select class="fld" id="wk"></select><label class="l" for="dt" style="margin-top:14px">Fecha</label><input class="fld" id="dt" inputmode="numeric" maxlength="5" enterkeyhint="next" autocomplete="off">
-<div id="secs"></div><h2><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg> Imágenes</h2><div id="th"></div><div class="none" id="none">Las imágenes aparecerán aquí cuando escribas un nombre.</div>
-<div class="tg"><label class="row"><span>Enviar mensaje de compañía</span><input type="checkbox" class="sw" id="m1"></label><label class="row"><span>Enviar segundo mensaje</span><input type="checkbox" class="sw" id="m2"></label></div></div>
+<h2><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg> Imágenes</h2><div id="th"></div><div class="none" id="none">Las imágenes aparecerán aquí cuando escribas un nombre.</div>
+<div class="tg"><label class="row"><span>Enviar mensaje de compañía</span><input type="checkbox" class="sw" id="m1"></label><label class="row"><span>Enviar segundo mensaje</span><input type="checkbox" class="sw" id="m2"></label></div><h2 style="margin-bottom:0"><svg viewBox="0 0 24 24"><g transform="translate(1.6 -2.2) scale(.88)"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75zM20.7 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75z"/></g><path d="M2.5 21.2c1.6-1.4 2.7-1.4 4.2 0s2.7 1.4 4.2 0 2.7-1.4 4.2 0 2.7 1.4 4.2 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Edición</h2><div id="secs"></div></div>
 
 <div id="vw" class="hide"><div id="vsw"><div class="vpg" id="vpp"><div class="vcd"><div class="vt"></div><img class="vimg" alt="" draggable="false"></div></div><div class="vpg" id="vs"><div class="vcd"><div class="vt" id="vtt"></div><img id="vi" class="vimg" alt="Asignación" draggable="false"></div></div><div class="vpg" id="vnn"><div class="vcd"><div class="vt"></div><img class="vimg" alt="" draggable="false"></div></div></div><button class="cl" id="vc" aria-label="Cerrar" data-tip="Cerrar">×</button>
 <div class="bar"><button class="ab" id="ed" aria-label="Editar" data-tip="Editar"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75zM20.7 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75z"/></svg></button>
@@ -338,11 +338,14 @@ async function waShare(){const c=cur,tx=msgFor(c);if(!NAT())return toast("WhatsA
 $("#rs").onclick=()=>$("#dl").showModal();$("#no").onclick=()=>$("#dl").close();
 $("#yes").onclick=()=>{S=fresh(S);save();$("#dl").close();render()};
 /* Configuración */
-function openCfg(){tpr();pdr();$("#mg").value=S.msg;$("#mg2").value=S.msg2;thSel();colSel();$("#cd").classList.add("on");$("#cd").setAttribute("aria-hidden","false");lockUI();mhl()}
-function openRot(){$("#rt").classList.add("on");$("#rt").setAttribute("aria-hidden","false");rotView()}
-function closeRot(){hidePop();$("#rt").classList.remove("on");$("#rt").setAttribute("aria-hidden","true")}
+const SPOS={cd:0,rt:0};
+function keepPos(id){const b=$("#"+id+" .pb");SPOS[id]=b.scrollTop}
+function restPos(id){const b=$("#"+id+" .pb"),y=SPOS[id];b.scrollTop=y;requestAnimationFrame(()=>{b.scrollTop=y;requestAnimationFrame(()=>{b.scrollTop=y})})}
+function openCfg(){tpr();pdr();$("#mg").value=S.msg;$("#mg2").value=S.msg2;thSel();colSel();$("#cd").classList.add("on");$("#cd").setAttribute("aria-hidden","false");lockUI();mhl();restPos("cd")}
+function openRot(){$("#rt").classList.add("on");$("#rt").setAttribute("aria-hidden","false");rotView();restPos("rt")}
+function closeRot(){if($("#rt").classList.contains("on"))keepPos("rt");hidePop();$("#rt").classList.remove("on");$("#rt").setAttribute("aria-hidden","true")}
 $("#rtn").onclick=openRot;$("#rtb").onclick=closeRot;
-function closeCfg(){closeRot();$("#cd").classList.remove("on");$("#cd").setAttribute("aria-hidden","true");lockUI()}
+function closeCfg(){if($("#cd").classList.contains("on"))keepPos("cd");closeRot();$("#cd").classList.remove("on");$("#cd").setAttribute("aria-hidden","true");lockUI()}
 $("#cf").onclick=openCfg;$("#cb").onclick=closeCfg;
 $("#lk").onchange=e=>{S.lock=e.target.checked;save();all()};
 function toast(m){const t=document.createElement("div");t.className="tt";t.textContent=m;(document.querySelector("dialog[open]")||document.body).append(t);setTimeout(()=>t.remove(),2200)}
