@@ -96,6 +96,7 @@ dialog[open]{animation:pop .25s}dialog[open]::backdrop{animation:fade .25s}dialo
 .rb{background:var(--sf);border:1px solid var(--bd);border-radius:18px;padding:16px;margin-bottom:16px;font-size:22px;line-height:1.3;font-weight:600}.rb b{color:var(--ac);font-weight:800}
 .rh{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}.rh .ttl{margin:0}
 .pl{width:40px;height:40px;border-radius:12px;background:var(--ac);color:var(--ac2);display:inline-flex;align-items:center;justify-content:center}.pl svg{width:24px;height:24px}
+.rbt{display:flex;gap:8px}.pl.alt{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}.pl.alt.on{background:var(--ac);color:var(--ac2);border-color:transparent}
 .pc{border:1px solid var(--bd);border-left:6px solid var(--bd);border-radius:14px;padding:10px;margin-top:10px;background:var(--bg)}
 .pr{display:flex;gap:8px;align-items:center}.pc .fld{padding:10px 12px;background:var(--sf)}.pc label.l{margin:8px 0 4px}
 .ord{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.ob{display:inline-flex;align-items:center;gap:2px;padding:7px 8px 7px 12px;border-radius:10px;font-weight:700;font-size:14px}.ob svg{width:18px;height:18px;opacity:.85}.ar{width:18px;height:18px;color:var(--mu);flex:none}
@@ -123,8 +124,11 @@ dialog[open]{animation:pop .25s}dialog[open]::backdrop{animation:fade .25s}dialo
 
 <div id="cd" class="pg" aria-hidden="true"><div class="ph"><button class="ic" id="cb" aria-label="Volver" data-tip="Volver"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg></button><b>Configuración</b></div>
 <div class="pb"><div class="in">
-<div class="set"><div class="rh"><div class="ttl">Calendario rotativo</div><button class="pl" id="rad" aria-label="Agregar participante" data-tip="Agregar participante"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg></button></div>
-<div id="rpl"></div><label class="l" style="margin:14px 0 6px">Orden de turnos</label><div class="ord" id="rord"></div>
+<div class="set"><div class="rh"><div class="ttl">Calendario rotativo</div><div class="rbt"><button class="pl alt" id="rls" aria-label="Lista de participantes" data-tip="Lista de participantes"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></button><button class="pl" id="rad" aria-label="Agregar participante" data-tip="Agregar participante"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg></button></div></div>
+<div class="stt" id="rem" style="margin:8px 0 0">Agrega participantes con el botón +.</div>
+<div id="rpl" class="hide"></div>
+<div id="rst" class="hide"><label class="l" for="rsd" style="margin:14px 0 6px">Fecha de inicio (empieza el primero de la lista)</label><input class="fld" id="rsd" type="date"></div>
+<label class="l" id="rol" style="margin:14px 0 6px">Orden de turnos</label><div class="ord" id="rord"></div>
 <div class="rcal hide" id="rcal"><div class="rch"><button class="ic sm" data-cm="-12" aria-label="Año anterior" data-tip="Año anterior">«</button><button class="ic sm" data-cm="-1" aria-label="Mes anterior" data-tip="Mes anterior">‹</button><button class="rct" id="rct" data-cm="today" data-tip="Ir a hoy"></button><button class="ic sm" data-cm="1" aria-label="Mes siguiente" data-tip="Mes siguiente">›</button><button class="ic sm" data-cm="12" aria-label="Año siguiente" data-tip="Año siguiente">»</button></div><div class="rcg" id="rcg"></div></div></div>
 <div class="set"><div class="row"><span class="ri"><svg viewBox="0 0 39 24" style="width:39px;height:24px"><g transform="translate(0,4.8) scale(.6)"><path d="M18 8h-1V6a5 5 0 00-10 0v2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V10a2 2 0 00-2-2zM9 6a3 3 0 016 0v2H9z"/></g><g transform="translate(15,0)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></g></svg></span><div class="rt"><div class="ttl">Bloquear imágenes ya compartidas</div><small>Evita compartir dos veces la misma imagen. Se desbloquea al editar su casillero.</small></div><input type="checkbox" class="sw" id="lk"></div></div>
 <div class="set"><div class="ttl">Apariencia</div><div class="seg" id="sg"><i class="kn" id="kn"></i>
@@ -153,7 +157,7 @@ const LK='<svg viewBox="0 0 24 24"><path d="M18 8h-1V6a5 5 0 00-10 0v2H6a2 2 0 0
 const CK='<svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
 const PR={blue:"#4f46e5",red:"#dc2626",yellow:"#eab308",green:"#16a34a"},PN={blue:"Azul",red:"Rojo",yellow:"Amarillo",green:"Verde",custom:"Personalizado"},TH=["light","dark","auto"];
 const RAINBOW="conic-gradient(#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)";
-const fresh=o=>({date:"",lock:o?o.lock!==false:true,pdf:o?o.pdf||null:null,msg:o?o.msg||"":"",theme:o?o.theme||"auto":"auto",ap:o?o.ap||"blue":"blue",cu:o?o.cu||"#a855f7":"#a855f7",vp:o?o.vp||null:null,rot:o&&o.rot?o.rot:{people:[],order:[],n:0},wk:"",main:["","","",""],aux:["","","",""],sh:{main:[0,0,0,0],aux:[0,0,0,0]}});
+const fresh=o=>({date:"",lock:o?o.lock!==false:true,pdf:o?o.pdf||null:null,msg:o?o.msg||"":"",theme:o?o.theme||"auto":"auto",ap:o?o.ap||"blue":"blue",cu:o?o.cu||"#a855f7":"#a855f7",vp:o?o.vp||null:null,rot:o&&o.rot?o.rot:{people:[],order:[],n:0,start:"",pv:2},wk:"",main:["","","",""],aux:["","","",""],sh:{main:[0,0,0,0],aux:[0,0,0,0]}});
 let S;try{S=JSON.parse(localStorage.getItem("asig"))}catch(e){}
 if(!S||!S.main||!S.aux)S=fresh(S&&typeof S==="object"?S:null);
 if(!S.sh)S.sh={main:S.main.map(()=>0),aux:S.aux.map(()=>0)};
@@ -357,15 +361,18 @@ $("#tq").onclick=()=>{TPL=false;tpl.removeAttribute("src");dbp("put",null,"tpl")
 const dnOf=(y,m,d)=>Math.floor(Date.UTC(y,m,d)/864e5),pdn=s=>{const[a,b,c]=s.split("-").map(Number);return dnOf(a,b-1,c)},isoOf=n=>new Date(n*864e5).toISOString().slice(0,10);
 const todayDn=()=>{const d=new Date();return dnOf(d.getFullYear(),d.getMonth(),d.getDate())};
 const hsl2hex=(h,s,l)=>{s/=100;l/=100;const a=s*Math.min(l,1-l),f=n=>{const k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1))};return toHex([f(0)*255,f(8)*255,f(4)*255])};
-const pn=p=>(p.name||"").trim()||"Sin nombre",fg=c=>lumOf(hx(c))>.62?"#111":"#fff",qa=s=>esc(s).replace(/"/g,"&quot;");
-function holder(dn){const R=S.rot,n=R.order.length;if(!n)return null;let best=null,bs=-1e9;
- R.people.forEach(p=>{const i=R.order.indexOf(p.id);if(i<0||!p.start)return;const s=pdn(p.start);if(s<=dn&&s>=bs){bs=s;best={i,s}}});
- if(!best)return null;const w=Math.floor((dn-best.s)/7);return R.people.find(p=>p.id===R.order[((best.i+w)%n+n)%n])||null}
+const pastel=i=>hsl2hex((i*137.508)%360,70,80),pn=p=>(p.name||"").trim()||"Sin nombre",fg=c=>"#1b1d29",qa=s=>esc(s).replace(/"/g,"&quot;");
+(()=>{const R=S.rot;if(R.start===undefined){const f=R.people.find(p=>p.id===R.order[0]);R.start=(f&&f.start)||""}
+ if(R.pv!==2){R.people.forEach((p,i)=>p.c=pastel(i));R.n=R.people.length;R.pv=2}R.people.forEach(p=>delete p.start);save()})();
+function holder(dn){const R=S.rot,n=R.order.length;if(!n||!R.start)return null;const s=pdn(R.start);if(dn<s)return null;
+ return R.people.find(p=>p.id===R.order[Math.floor((dn-s)/7)%n])||null}
 let cm=(()=>{const d=new Date();return{y:d.getFullYear(),m:d.getMonth()}})();
-function rotList(){const R=S.rot;$("#rpl").innerHTML=R.people.length?R.people.map(p=>`<div class="pc" style="border-left-color:${p.c}"><div class="pr"><input class="fld" data-rn="${p.id}" value="${qa(p.name||"")}" placeholder="Nombre" autocomplete="off"><button class="ic sm rm" data-rd="${p.id}" aria-label="Eliminar" data-tip="Eliminar">${X}</button></div><label class="l" for="rs-${p.id}">Inicio del turno</label><input class="fld" id="rs-${p.id}" type="date" data-rs="${p.id}" value="${p.start||""}"></div>`).join(""):'<div class="stt" style="margin:8px 0 0">Agrega participantes con el botón +.</div>'}
+let rlo=false;
+function rlv(){$("#rpl").classList.toggle("hide",!rlo||!S.rot.people.length);$("#rls").classList.toggle("on",rlo)}
+function rotList(){const R=S.rot;$("#rpl").innerHTML=R.people.map(p=>`<div class="pc" style="border-left-color:${p.c}"><div class="pr"><input class="fld" data-rn="${p.id}" value="${qa(p.name||"")}" placeholder="Nombre" autocomplete="off"><button class="ic sm rm" data-rd="${p.id}" aria-label="Eliminar" data-tip="Eliminar">${X}</button></div></div>`).join("");rlv()}
 function rotView(){const R=S.rot;
  $("#rord").innerHTML=R.order.map((id,i)=>{const p=R.people.find(q=>q.id===id);return(i?'<svg class="ar" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>':"")+`<button class="ob" data-pos="${i}" style="background:${p.c};color:${fg(p.c)}">${esc(pn(p))}<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>`}).join("");
- $("#rcal").classList.toggle("hide",!R.people.length);
+ $("#rcal").classList.toggle("hide",!R.people.length);$("#rem").classList.toggle("hide",!!R.people.length);$("#rst").classList.toggle("hide",!R.people.length);$("#rol").classList.toggle("hide",!R.people.length);$("#rsd").value=R.start||"";
  const{y,m}=cm,first=(new Date(Date.UTC(y,m,1)).getUTCDay()+6)%7,days=new Date(Date.UTC(y,m+1,0)).getUTCDate(),t=todayDn();
  $("#rct").textContent=MS[m][0].toUpperCase()+MS[m].slice(1)+" "+y;
  let h=["lun","mar","mié","jue","vie","sáb","dom"].map(x=>`<div class="dh">${x}</div>`).join("");
@@ -373,11 +380,12 @@ function rotView(){const R=S.rot;
  for(let d=1;d<=days;d++){const dn=dnOf(y,m,d),p=holder(dn);h+=`<div class="dc${dn===t?" t":""}"${p?` style="background:${p.c};color:${fg(p.c)};border-color:transparent"`:""}><span class="n">${d}</span>${p?`<span class="p">${esc(pn(p))}</span>`:""}</div>`}
  $("#rcg").innerHTML=h;
  const hp=holder(t),nm=hp?(hp.name||"").trim():"";$("#rb").classList.toggle("hide",!nm);if(nm)$("#rb").innerHTML=`Esta semana envía las asignaciones... <b>${esc(nm)}</b>`}
-$("#rad").onclick=()=>{const R=S.rot,last=R.people[R.people.length-1];let st=todayDn();if(last&&last.start)st=pdn(last.start)+7;
- const p={id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:"",start:isoOf(st),c:hsl2hex((R.n++*137.508)%360,62,42)};
- R.people.push(p);R.order.push(p.id);save();rotList();rotView();const el=$(`[data-rn="${p.id}"]`);el.focus();el.scrollIntoView({block:"center",behavior:"smooth"})};
+$("#rad").onclick=()=>{const R=S.rot;if(!R.start)R.start=isoOf(todayDn());
+ const p={id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:"",c:pastel(R.n++)};
+ R.people.push(p);R.order.push(p.id);rlo=true;save();rotList();rotView();const el=$(`[data-rn="${p.id}"]`);el.focus();el.scrollIntoView({block:"center",behavior:"smooth"})};
+$("#rls").onclick=()=>{rlo=!rlo;rlv()};
+$("#rsd").addEventListener("change",e=>{S.rot.start=e.target.value;save();rotView()});
 $("#rpl").addEventListener("input",e=>{const id=e.target.dataset.rn;if(!id)return;const p=S.rot.people.find(q=>q.id===id);if(p){p.name=e.target.value;save();rotView()}});
-$("#rpl").addEventListener("change",e=>{const id=e.target.dataset.rs;if(!id)return;const p=S.rot.people.find(q=>q.id===id);if(p){p.start=e.target.value;save();rotView()}});
 $("#rpl").addEventListener("click",e=>{const b=e.target.closest("[data-rd]");if(!b)return;const R=S.rot,id=b.dataset.rd;R.people=R.people.filter(p=>p.id!==id);R.order=R.order.filter(x=>x!==id);save();rotList();rotView()});
 $("#rcal").addEventListener("click",e=>{const b=e.target.closest("[data-cm]");if(!b)return;const v=b.dataset.cm;
  if(v==="today"){const d=new Date();cm={y:d.getFullYear(),m:d.getMonth()}}else{const t=cm.y*12+cm.m+ +v,y=Math.floor(t/12);cm={y,m:t-y*12}}rotView()});
