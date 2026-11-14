@@ -438,7 +438,7 @@ function cw(){return((S.pdf&&S.pdf.weeks)||[]).find(x=>x.label===S.wk)}
 function wkr(){const w=(S.pdf&&S.pdf.weeks)||[];$("#wk").innerHTML=w.length?`<option value="-1" ${S.wk?"":"selected"}>Ninguno</option>`+w.map((x,i)=>`<option value="${i}" ${S.wk===x.label?"selected":""}>${x.label}</option>`).join(""):'<option value="" disabled selected>Sin PDF cargado</option>'}
 function pdr(){$("#pb").textContent=S.pdf?`${S.pdf.name} · ${S.pdf.weeks.length} semanas`:"Todavía no hay ningún PDF.";$("#pu").classList.toggle("hide",!!S.pdf);$("#pc").classList.toggle("hide",!S.pdf);$("#pq").classList.toggle("hide",!S.pdf)}
 function hl1(a,b){const t=$("#"+a);t.style.height="auto";t.style.height=Math.max(84,t.scrollHeight+2)+"px";$("#"+b).innerHTML=esc(t.value).replace(/#(?:nombre|ayudante|fecha|asignaci[oó]n|sala)(?![\p{L}\d])/giu,m=>`<span class="nb">${m}</span>`)+"\u200b"}
-const APP_VER="2.11.0",APP_DATE="14/11/2026";$("#vr").textContent="V "+APP_VER+" ("+APP_DATE+")";
+const APP_VER="2.11.1",APP_DATE="14/11/2026";$("#vr").textContent="V "+APP_VER+" ("+APP_DATE+")";
 const mhl=()=>{hl1("mg","mb");hl1("mg2","mb2")};
 $("#mg").oninput=e=>{S.msg=e.target.value;save();mhl()};$("#mg2").oninput=e=>{S.msg2=e.target.value;save();mhl()};
 $("#m1").onchange=e=>{S.m1on=e.target.checked;save()};$("#m2").onchange=e=>{S.m2on=e.target.checked;save()};
