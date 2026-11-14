@@ -33,6 +33,21 @@ Cada vez que subas cambios al repositorio, se genera un APK nuevo. También pued
 
 Los datos (textos, PDF) se guardan en cada dispositivo; la versión de iPhone y la de Android no se sincronizan.
 
+## Actualizaciones dentro de la app (Android)
+
+Al abrirse, la app consulta la última versión publicada en GitHub (**Releases**). Si es más nueva que la instalada,
+muestra la barra naranja "Hay una actualización pendiente. Descargar e instalar aquí." y, al tocarla, descarga el APK
+con barra de progreso y abre el instalador de Android.
+
+1. En `www/index.html` cambia la línea `const UPDATE_REPO="TU_USUARIO/asignaciones"` por tu usuario y repositorio.
+2. Para publicar una versión nueva: sube el número en `package.json` (`"version"`) **y** en `www/index.html` (`APP_VER`).
+   Ambos deben coincidir (si no, GitHub Actions avisa con un error). Al subir los cambios, GitHub compila el APK y lo
+   publica solo en **Releases** como `Asignaciones.apk`.
+3. La primera vez, Android pide permitir "instalar apps desconocidas" a Asignaciones; después solo pide confirmar.
+
+Importante: el repositorio debe ser público y la versión que ya tengas instalada no trae esta función, así que
+instala una vez a mano el APK 2.11.0 o superior.
+
 ## Plantilla de asignación (imagen)
 
 La imagen de la plantilla **no está en el repositorio** a propósito. Al abrir la app por primera vez en cada dispositivo (iPhone o Android), súbela en **Configuración (⚙) → Subir imagen**. Se guarda solo en ese dispositivo.

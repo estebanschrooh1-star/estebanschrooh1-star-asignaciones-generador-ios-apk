@@ -23,7 +23,7 @@ const pkg = /package\s+([\w.]+);/.exec(fs.readFileSync(mainPath, "utf8"))[1];
 const dir = path.dirname(mainPath);
 
 // 1) Plugin
-for (const f of ["WhatsAppSharePlugin.java", "PdfSharePlugin.java"]) {
+for (const f of ["WhatsAppSharePlugin.java", "PdfSharePlugin.java", "AppUpdatePlugin.java"]) {
   const tpl = fs.readFileSync(path.join(root, "native", "android", f), "utf8");
   fs.writeFileSync(path.join(dir, f), tpl.replace("__PACKAGE__", pkg));
 }
@@ -39,6 +39,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(WhatsAppSharePlugin.class);
         registerPlugin(PdfSharePlugin.class);
+        registerPlugin(AppUpdatePlugin.class);
         super.onCreate(savedInstanceState);
     }
 }
@@ -68,7 +69,9 @@ if (!xml.includes("android.intent.action.SEND")) {
   if (!xml.includes("</activity>")) { console.error("No encontré <activity> en AndroidManifest.xml"); process.exit(1); }
   xml = xml.replace("</activity>", filter + "</activity>");
 }
+if (!/android:screenOrientation=/.test(xml)) xml = xml.replace(/(<activity\b)/, '$1 android:screenOrientation="portrait"');
 if (!/android:launchMode=/.test(xml)) xml = xml.replace(/(<activity\b)/, '$1 android:launchMode="singleTask"');
+if (!xml.includes("REQUEST_INSTALL_PACKAGES")) xml = xml.replace(/<application\b/, '<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />\n    <application');
 fs.writeFileSync(mf, xml);
 
 console.log("Funciones nativas agregadas en el paquete", pkg);
