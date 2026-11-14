@@ -632,7 +632,7 @@ document.addEventListener("contextmenu",e=>{if(e.target.closest("[data-tip]"))e.
 if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol)&&!NAT())addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 
 /* ===== Actualizaciones desde GitHub (solo Android, al abrir la app) ===== */
-const UPDATE_REPO="TU_USUARIO/asignaciones"; /* ← cambia por tu usuario/repositorio de GitHub */
+const UPDATE_REPO="estebanschrooh1-star/estebanschrooh1-star-asignaciones-generador-ios-apk"; /* ← cambia por tu usuario/repositorio de GitHub */
 const verNum=v=>String(v).replace(/^v/i,"").split(".").map(n=>parseInt(n)||0),verGt=(a,b)=>{a=verNum(a);b=verNum(b);for(let i=0;i<3;i++)if((a[i]||0)!==(b[i]||0))return(a[i]||0)>(b[i]||0);return false};
 let upd=null,updBusy=false,updDone=false;
 const setProg=p=>{$("#upi").style.width=p+"%"};
