@@ -39,9 +39,9 @@ Al abrirse, la app consulta la última versión publicada en GitHub (**Releases*
 muestra la barra naranja "Hay una actualización pendiente. Descargar e instalar aquí." y, al tocarla, descarga el APK
 con barra de progreso y abre el instalador de Android.
 
-1. En `www/index.html` cambia la línea `const UPDATE_REPO="TU_USUARIO/asignaciones"` por tu usuario y repositorio.
-2. Para publicar una versión nueva: sube el número en `package.json` (`"version"`) **y** en `www/index.html` (`APP_VER`).
-   Ambos deben coincidir (si no, GitHub Actions avisa con un error). Al subir los cambios, GitHub compila el APK y lo
+1. El repositorio ya está configurado en `www/index.html` (`const UPDATE_REPO="usuario/repositorio"`). Si cambias de repositorio, edita esa línea.
+2. Para publicar una versión nueva: sube el número en `package.json` (`"version"`), en `www/index.html` (`APP_VER` y `APP_DATE`)
+   y el nombre de caché en `www/sw.js` (`asig-vNN`). `package.json` y `APP_VER` deben coincidir (si no, GitHub Actions avisa con un error). Al subir los cambios, GitHub compila el APK y lo
    publica solo en **Releases** como `Asignaciones.apk`.
 3. La primera vez, Android pide permitir "instalar apps desconocidas" a Asignaciones; después solo pide confirmar.
 

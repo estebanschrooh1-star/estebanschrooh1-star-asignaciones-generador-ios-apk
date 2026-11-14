@@ -147,21 +147,32 @@ input[type=date],input[type=time]{display:block;min-width:0;max-width:100%;-webk
 .rh,#rplw{display:none!important}
 *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea{-webkit-user-select:text;user-select:text}
-.upd{order:9;margin-top:10px;border-radius:14px;background:#ee6c0e;color:#fff;padding:10px 14px;cursor:pointer;box-shadow:0 4px 14px rgba(238,108,14,.35);animation:updin .45s cubic-bezier(.2,.9,.2,1)}
-.ut{display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600;line-height:1.3}
-.ut svg{flex:none;width:22px;height:22px}.ut u{text-underline-offset:2px}
-.up{height:0;overflow:hidden;border-radius:4px;background:rgba(255,255,255,.35);transition:height .25s,margin .25s}
-.upd.go .up{height:6px;margin-top:9px}
-.up i{display:block;height:100%;width:0;background:#fff;border-radius:4px;transition:width .2s linear}
-@keyframes updin{from{opacity:0;transform:translateY(-8px)}}
+#updw{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(.2,.8,.2,1)}
+#updw.on{grid-template-rows:1fr}
+#updw>.ui{min-height:0;overflow:hidden;opacity:0;transition:opacity .45s}
+#updw.on>.ui{opacity:1}
+#upd{position:relative;margin:2px 0 14px;display:flex;gap:12px;align-items:center;padding:14px 14px 14px 22px;background:#f7ecd5;color:#1c1c28;overflow:hidden}
+:root[data-theme="dark"] #upd{background:#3a3222;color:#f2f2f2}
+#upd:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:#f6b73c}
+.uic{flex:none;width:34px;height:34px}
+.utx{flex:1;min-width:0;line-height:1.3}
+.ut1{font-size:15px;font-weight:600}
+.ut2{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+#updgo{font:inherit;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer;text-align:left}
+#updlater{font:inherit;font-size:13px;font-weight:600;color:inherit;opacity:.65;background:none;border:0;padding:6px 2px 6px 14px;cursor:pointer}
+.up{height:0;overflow:hidden;background:rgba(0,0,0,.1);transition:height .25s}
+#upd .up{position:absolute;left:0;right:0;bottom:0}
+.go .up{height:5px}
+.up i{display:block;height:100%;width:0;background:#f6b73c;transition:width .2s linear}
+#upcfg{cursor:pointer}#upcfg .up{margin:0 16px;border-radius:3px}#upcfg.go .up{height:6px;margin-bottom:12px}
 </style></head><body>
 <div class="top"><small id="td"></small><div class="tr"><h1>Asignaciones</h1>
 <button class="ic ig" id="rs" aria-label="Desbloquear todas las imágenes" data-tip="Desbloquear todas las imágenes"><svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg></button>
 <button class="ic ig" id="pv" aria-label="Ver PDF" data-tip="Ver PDF"><svg viewBox="0 0 24 24" style="width:26px;height:26px"><rect x="1.5" y="5" width="21" height="14" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><text x="12" y="15.1" text-anchor="middle" font-size="8.5" font-weight="800" font-family="Arial,Helvetica,sans-serif">PDF</text></svg></button>
 <button class="ic ig" id="cf" aria-label="Configuración" data-tip="Configuración"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg></button>
 </div>
-<div class="upd hide" id="upd" role="button" tabindex="0"><div class="ut"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/></svg><span>Hay una actualización pendiente. <b><u>Descargar e instalar aquí.</u></b></span></div><div class="up"><i id="upi"></i></div></div></div>
-<div class="wrap"><div class="rb hide" id="rb"></div><label class="l" for="wk">Semana del PDF</label><select class="fld" id="wk"></select><label class="l" for="dt" style="margin-top:14px">Fecha</label><input class="fld" id="dt" inputmode="numeric" maxlength="5" enterkeyhint="next" autocomplete="off">
+</div>
+<div class="wrap"><div id="updw"><div class="ui"><div id="upd" class="upgo" role="region" aria-label="Actualización pendiente"><svg class="uic" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#f6b73c"/><rect x="15" y="14.5" width="4" height="11" rx="2" fill="#fff"/><circle cx="17" cy="9.8" r="2.4" fill="#fff"/></svg><div class="utx"><div class="ut1">Hay una actualización pendiente.</div><div class="ut2"><button id="updgo">Descargar e instalar aquí.</button><button id="updlater">Más tarde</button></div></div><div class="up"><i class="upi"></i></div></div></div></div><div class="rb hide" id="rb"></div><label class="l" for="wk">Semana del PDF</label><select class="fld" id="wk"></select><label class="l" for="dt" style="margin-top:14px">Fecha</label><input class="fld" id="dt" inputmode="numeric" maxlength="5" enterkeyhint="next" autocomplete="off">
 <h2><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg> Imágenes</h2><div id="th"></div><div class="none" id="none">Las imágenes aparecerán aquí cuando escribas un nombre.</div>
 <div class="tg"><label class="row"><span>Enviar mensaje de compañía</span><input type="checkbox" class="sw" id="m1"></label><label class="row"><span>Enviar segundo mensaje</span><input type="checkbox" class="sw" id="m2"></label></div><h2 style="margin-bottom:0"><svg viewBox="0 0 24 24"><g transform="translate(1.6 -2.2) scale(.88)"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75zM20.7 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75z"/></g><path d="M2.5 21.2c1.6-1.4 2.7-1.4 4.2 0s2.7 1.4 4.2 0 2.7-1.4 4.2 0 2.7 1.4 4.2 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Edición</h2><div id="secs"></div></div>
 
@@ -180,6 +191,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <button data-th="dark" aria-label="Oscuro" data-tip="Oscuro"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
 <button data-th="auto" aria-label="Predeterminado" data-tip="Predeterminado"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.8a4.2 4.2 0 000 8.4z"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g></svg></button></div></div>
 <div class="set"><div class="ttl">Color de la app</div><div class="cols" id="cs"></div></div>
+<div class="set hide upgo" id="upcfg" role="button" tabindex="0"><div class="row"><span class="ri"><svg viewBox="0 0 30 30" style="width:34px;height:34px"><path d="M15 4v13m0 0-5-5m5 5 5-5M6 21v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="rt"><div class="ttl">Actualización disponible</div><small id="upcv">Toca aquí para descargar e instalar la nueva versión.</small></div></div><div class="up"><i class="upi"></i></div></div>
 <div class="set"><div class="row"><span class="ri"><svg viewBox="0 0 30 30" style="width:34px;height:34px"><rect x="4" y="3" width="22" height="11" rx="3.5" fill="currentColor"/><rect x="4" y="17" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></span><div class="rt"><div class="ttl">Pantalla dividida</div><small>Muestra el PDF en la parte de arriba mientras usas la app. Si la desactivas, el PDF se abre siempre a pantalla completa.</small></div><input type="checkbox" class="sw" id="sps"></div></div>
 <div class="set"><div class="row"><span class="ri"><svg viewBox="0 0 30 30" style="width:34px;height:34px"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/><circle cx="20.5" cy="20.5" r="8.6" style="fill:var(--sf)"/><g transform="translate(20.5 20.5) scale(.62) translate(-12 -11.5)"><path d="M18 8h-1V6a5 5 0 00-10 0v2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V10a2 2 0 00-2-2zM9 6a3 3 0 016 0v2H9z"/></g></svg></span><div class="rt"><div class="ttl">Bloquear imágenes ya compartidas</div><small>Evita compartir dos veces la misma imagen. Se desbloquea al editar su casillero.</small></div><input type="checkbox" class="sw" id="lk"></div></div>
 <button class="set rowb" id="rtn"><svg class="ri2" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><div class="rt"><div class="ttl">Calendario rotativo</div><small>Define quién envía las asignaciones cada semana.</small></div><svg class="chv" viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></button>
@@ -632,20 +644,23 @@ document.addEventListener("contextmenu",e=>{if(e.target.closest("[data-tip]"))e.
 if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol)&&!NAT())addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 
 /* ===== Actualizaciones desde GitHub (solo Android, al abrir la app) ===== */
-const UPDATE_REPO="estebanschrooh1-star/estebanschrooh1-star-asignaciones-generador-ios-apk"; /* ← cambia por tu usuario/repositorio de GitHub */
+const UPDATE_REPO="estebanschrooh1-star/estebanschrooh1-star-asignaciones-generador-ios-apk";
 const verNum=v=>String(v).replace(/^v/i,"").split(".").map(n=>parseInt(n)||0),verGt=(a,b)=>{a=verNum(a);b=verNum(b);for(let i=0;i<3;i++)if((a[i]||0)!==(b[i]||0))return(a[i]||0)>(b[i]||0);return false};
 let upd=null,updBusy=false,updDone=false;
-const setProg=p=>{$("#upi").style.width=p+"%"};
+const setProg=p=>$$(".upi").forEach(e=>{e.style.width=p+"%"});
 async function checkUpdate(){if(!NAT()||UPDATE_REPO.includes("TU_USUARIO"))return;
  try{const r=await fetch(`https://api.github.com/repos/${UPDATE_REPO}/releases/latest`,{headers:{Accept:"application/vnd.github+json"}});if(!r.ok)return;
-  const j=await r.json(),a=(j.assets||[]).find(x=>/\.apk$/i.test(x.name));if(!a||!verGt(j.tag_name,APP_VER))return;upd={url:a.browser_download_url,ver:j.tag_name};$("#upd").classList.remove("hide")}catch(x){}}
+  const j=await r.json(),a=(j.assets||[]).find(x=>/\.apk$/i.test(x.name));if(!a||!verGt(j.tag_name,APP_VER))return;
+  upd={url:a.browser_download_url,ver:j.tag_name};$("#upcv").textContent="Versión "+String(j.tag_name).replace(/^v/i,"")+" lista. Toca aquí para descargar e instalar.";
+  $("#upcfg").classList.remove("hide");setTimeout(()=>$("#updw").classList.add("on"),700)}catch(x){}}
 async function instUpd(P){try{await P.install()}catch(x){toast(String(x&&x.message||x).includes("need_permission")?"Permite instalar apps desde Asignaciones y vuelve a tocar el aviso":"No se pudo abrir el instalador")}}
-async function runUpd(){if(!upd||updBusy)return;const Pl=Capacitor.Plugins,P=Pl.AppUpdate||Capacitor.registerPlugin("AppUpdate"),b=$("#upd");
+async function runUpd(){if(!upd||updBusy)return;const P=Capacitor.Plugins.AppUpdate||Capacitor.registerPlugin("AppUpdate"),G=$$(".upgo");
  if(updDone)return instUpd(P);
- updBusy=true;b.classList.add("go");setProg(0);let h=null;
+ updBusy=true;G.forEach(e=>e.classList.add("go"));setProg(0);let h=null;
  try{h=await P.addListener("progress",e=>setProg(e.percent));await P.download({url:upd.url});updDone=true;setProg(100);await instUpd(P)}
- catch(x){toast("No se pudo descargar la actualización");b.classList.remove("go");setProg(0)}
+ catch(x){toast("No se pudo descargar la actualización");G.forEach(e=>e.classList.remove("go"));setProg(0)}
  if(h)h.remove();updBusy=false}
-$("#upd").onclick=runUpd;$("#upd").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();runUpd()}};
+$("#updgo").onclick=runUpd;$("#updlater").onclick=()=>$("#updw").classList.remove("on");
+$("#upcfg").onclick=runUpd;$("#upcfg").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();runUpd()}};
 checkUpdate();
 </script><div id="phint">Desliza el visor hacia abajo para ver el PDF en pantalla completa.</div></body></html>
