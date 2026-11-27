@@ -40,9 +40,9 @@ muestra la barra naranja "Hay una actualización pendiente. Descargar e instalar
 con barra de progreso y abre el instalador de Android.
 
 1. El repositorio ya está configurado en `www/index.html` (`const UPDATE_REPO="usuario/repositorio"`). Si cambias de repositorio, edita esa línea.
-2. Para publicar una versión nueva: sube el número en `package.json` (`"version"`), en `www/index.html` (`APP_VER` y `APP_DATE`)
-   y el nombre de caché en `www/sw.js` (`asig-vNN`). `package.json` y `APP_VER` deben coincidir (si no, GitHub Actions avisa con un error). Al subir los cambios, GitHub compila el APK y lo
-   publica solo en **Releases** como `Asignaciones.apk`.
+2. La versión es automática: `<VERSION>.<n.º de commits>` (ej. `2.12.58`). Para publicar una actualización:
+   **Actions → Compilar APK y publicar PWA → Run workflow → marcar "Publicar una actualización"**. Se crea el Release con el APK
+   y las apps instaladas lo detectan al abrirse. Para un cambio grande, sube el número del archivo `VERSION` (ej. `2.12` → `2.13`).
 3. La primera vez, Android pide permitir "instalar apps desconocidas" a Asignaciones; después solo pide confirmar.
 
 Importante: el repositorio debe ser público y la versión que ya tengas instalada no trae esta función, así que
