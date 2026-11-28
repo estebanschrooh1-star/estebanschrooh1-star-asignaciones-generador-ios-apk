@@ -1,6 +1,6 @@
 {
   "name": "asignaciones",
-  "version": "2.11.1",
+  "version": "2.13.0",
   "private": true,
   "description": "Asignaciones - app web (PWA) y Android (Capacitor)",
   "scripts": {
