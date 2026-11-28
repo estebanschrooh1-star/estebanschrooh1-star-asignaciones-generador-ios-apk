@@ -14,27 +14,41 @@ permissions:
   contents: read
 
 jobs:
-  # ---------- Android ----------
-  apk:
+  # ---------- Versión (la usan el APK y la PWA) ----------
+  version:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.ver.outputs.v }}
+      v: ${{ steps.ver.outputs.v }}
+      count: ${{ steps.ver.outputs.count }}
+      date: ${{ steps.ver.outputs.date }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # necesario para contar los commits
 
-      # Versión = (archivo VERSION, o "version" de package.json) + n.º de commits
+      # Versión = "<VERSION>.<n.º de commits>", siempre de 3 números (ej. 2.12.58).
+      # La app solo compara 3 números, por eso VERSION tiene que ser de 2 (ej. 2.12).
       - name: Calcular la versión
         id: ver
         run: |
-          if [ -f VERSION ]; then
-            BASE="$(tr -d '[:space:]' < VERSION)"
-          else
-            BASE="$(node -p "require('./package.json').version")"
+          BASE="$(tr -d '[:space:]' < VERSION)"
+          if ! echo "$BASE" | grep -Eq '^[0-9]+\.[0-9]+$'; then
+            echo "::error::El archivo VERSION debe tener 2 números (ej. 2.12), no '$BASE'"
+            exit 1
           fi
-          echo "v=$BASE.$(git rev-list --count HEAD)" >> "$GITHUB_OUTPUT"
-          echo "count=$(git rev-list --count HEAD)" >> "$GITHUB_OUTPUT"
+          COUNT="$(git rev-list --count HEAD)"
+          echo "v=$BASE.$COUNT" >> "$GITHUB_OUTPUT"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "date=$(TZ=America/Argentina/Buenos_Aires date +%d/%m/%Y)" >> "$GITHUB_OUTPUT"
+
+  # ---------- Android ----------
+  apk:
+    needs: version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ needs.version.outputs.v }}
+    steps:
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
@@ -48,7 +62,10 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      - name: Preparar archivos web
+      - name: Preparar archivos web (con la versión)
+        env:
+          APP_VERSION: ${{ needs.version.outputs.v }}
+          APP_DATE: ${{ needs.version.outputs.date }}
         run: npm run prepare:web
 
       - name: Crear proyecto Android
@@ -65,11 +82,12 @@ jobs:
       # Así cada APK publicado tiene un número de versión mayor y Android permite actualizar
       - name: Aplicar versión al APK
         env:
-          VERSION_NAME: ${{ steps.ver.outputs.v }}
-          VERSION_CODE: ${{ steps.ver.outputs.count }}
+          VERSION_NAME: ${{ needs.version.outputs.v }}
+          VERSION_CODE: ${{ needs.version.outputs.count }}
         run: |
           sed -i "s/versionCode .*/versionCode $VERSION_CODE/" android/app/build.gradle
           sed -i "s/versionName .*/versionName \"$VERSION_NAME\"/" android/app/build.gradle
+          grep -q "versionName \"$VERSION_NAME\"" android/app/build.gradle || { echo "::error::No se pudo poner la versión en build.gradle"; exit 1; }
 
       - name: Usar clave de firma fija (para poder actualizar la app sin desinstalar)
         run: |
@@ -83,6 +101,24 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
+
+      # Candado: si el APK no lleva la clave fija, se corta aquí en vez de publicar algo que no se pueda actualizar
+      - name: Verificar la firma del APK
+        env:
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+        run: |
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          KS="$(keytool -list -v -keystore resources/signing/debug.keystore -storepass android 2>/dev/null)"
+          EXPECTED="$(awk '/SHA256:/{print $2; exit}' <<< "$KS" | tr -d ':' | tr 'A-F' 'a-f')"
+          APKSIGNER="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/apksigner | sort -V | tail -n 1)"
+          OUT="$("$APKSIGNER" verify --print-certs "$APK")"
+          ACTUAL="$(awk '/SHA-256 digest/{print $NF; exit}' <<< "$OUT")"
+          echo "Firma esperada: $EXPECTED"
+          echo "Firma del APK:  $ACTUAL"
+          if [ -z "$EXPECTED" ] || [ "$EXPECTED" != "$ACTUAL" ]; then
+            echo "::error::El APK no está firmado con resources/signing/debug.keystore."
+            exit 1
+          fi
 
       - name: Subir APK
         uses: actions/upload-artifact@v4
@@ -123,6 +159,7 @@ jobs:
 
   # ---------- iPhone / iPad (PWA en GitHub Pages) ----------
   pwa:
+    needs: version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -134,7 +171,10 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
-      - name: Preparar archivos web
+      - name: Preparar archivos web (con la versión)
+        env:
+          APP_VERSION: ${{ needs.version.outputs.v }}
+          APP_DATE: ${{ needs.version.outputs.date }}
         run: npm run prepare:web
 
       - uses: actions/configure-pages@v5
