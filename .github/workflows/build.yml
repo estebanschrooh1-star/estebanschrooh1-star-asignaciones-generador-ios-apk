@@ -71,6 +71,14 @@ jobs:
           npx cap add android
           npx cap sync android
 
+      - name: Comprobar la versión dentro de la app
+        env:
+          V: ${{ needs.version.outputs.v }}
+        run: |
+          grep -q "APP_VER=\"$V\"" android/app/src/main/assets/public/index.html \
+            && echo "La app lleva la versión $V" \
+            || echo "::warning::www/index.html no quedó con la versión $V (¿está actualizado scripts/prepare-web.js?). La app igual lee su versión real del APK."
+
       - name: Aplicar logo de la app
         run: cp -r resources/android-res/. android/app/src/main/res/
 
