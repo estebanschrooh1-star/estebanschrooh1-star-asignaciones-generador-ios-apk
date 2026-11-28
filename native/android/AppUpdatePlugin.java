@@ -87,6 +87,19 @@ public class AppUpdatePlugin extends Plugin {
         return p.signatures;
     }
 
+    /** Versión real del APK instalado (versionName), la misma que lleva la etiqueta del Release. */
+    @PluginMethod
+    public void version(PluginCall call) {
+        try {
+            PackageInfo p = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            JSObject o = new JSObject();
+            o.put("version", p.versionName == null ? "" : p.versionName);
+            call.resolve(o);
+        } catch (Exception e) {
+            call.reject("error");
+        }
+    }
+
     @PluginMethod
     public void install(PluginCall call) {
         Context ctx = getContext();
