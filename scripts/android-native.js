@@ -45,6 +45,25 @@ public class MainActivity extends BridgeActivity {
 }
 `);
 
+// 2b) Firma fija: el APK de debug se firma SIEMPRE con resources/signing/debug.keystore.
+// Sin esto, cada compilación en GitHub podría salir con una clave distinta y Android
+// rechazaría las actualizaciones ("package conflicts with an existing package").
+const gradlePath = path.join(root, "android", "app", "build.gradle");
+let gradle = fs.readFileSync(gradlePath, "utf8");
+if (!gradle.includes("resources/signing/debug.keystore")) {
+  const patched = gradle.replace(/\bandroid\s*\{/, `android {
+    signingConfigs {
+        debug {
+            storeFile file("../../resources/signing/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }`);
+  if (patched === gradle) { console.error("No pude fijar la firma en android/app/build.gradle."); process.exit(1); }
+  fs.writeFileSync(gradlePath, patched);
+}
+
 // 3) El proveedor de archivos debe poder compartir la carpeta de caché
 const fp = path.join(root, "android", "app", "src", "main", "res", "xml", "file_paths.xml");
 fs.mkdirSync(path.dirname(fp), { recursive: true });

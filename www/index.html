@@ -151,20 +151,33 @@ input,textarea{-webkit-user-select:text;user-select:text}
 #updw.on{grid-template-rows:1fr}
 #updw>.ui{min-height:0;overflow:hidden;opacity:0;transition:opacity .45s}
 #updw.on>.ui{opacity:1}
-#upd{position:relative;margin:2px 0 14px;display:flex;gap:12px;align-items:center;padding:14px 14px 14px 22px;background:#f7ecd5;color:#1c1c28;overflow:hidden}
-:root[data-theme="dark"] #upd{background:#3a3222;color:#f2f2f2}
-#upd:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:#f6b73c}
-.uic{flex:none;width:34px;height:34px}
+#upd{position:relative;margin:2px 0 14px;padding:14px;border-radius:18px;background:linear-gradient(135deg,var(--acs),transparent 65%),var(--sf);border:1px solid var(--acs);overflow:hidden;transition:padding .25s}
+#upd.go{padding-bottom:20px}
+.uh{display:flex;gap:12px;align-items:center}
+.uic{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ac);color:var(--ac2);display:grid;place-items:center}
+.uic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#updw.on .uic svg{animation:ubob 1.4s ease-in-out 3}
+@keyframes ubob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+@keyframes uspin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.uic svg,.ubs.sp svg{animation:none!important}}
 .utx{flex:1;min-width:0;line-height:1.3}
-.ut1{font-size:15px;font-weight:600}
-.ut2{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
-#updgo{font:inherit;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer;text-align:left}
-#updlater{font:inherit;font-size:13px;font-weight:600;color:inherit;opacity:.65;background:none;border:0;padding:6px 2px 6px 14px;cursor:pointer}
-.up{height:0;overflow:hidden;background:rgba(0,0,0,.1);transition:height .25s}
+.ut1{font-size:16px;font-weight:700}
+.ut2{font-size:13px;color:var(--mu);margin-top:2px}
+.ua{display:flex;gap:8px;margin-top:12px}
+.ub1{flex:1;padding:12px 16px;border-radius:12px;background:var(--ac);color:var(--ac2);font-weight:700;font-size:15px}
+.ub2{padding:12px 14px;border-radius:12px;font-size:14px;font-weight:600;color:var(--mu)}
+.ub1,.ub2,.ubs{transition:transform .15s,opacity .2s}
+.ub1:active,.ub2:active,.ubs:active{transform:scale(.96)}
+#upd.go .ua{display:none}
+.up{height:0;overflow:hidden;background:var(--acs);transition:height .25s}
+.up i{display:block;height:100%;width:0;background:var(--ac);transition:width .2s linear}
 #upd .up{position:absolute;left:0;right:0;bottom:0}
-.go .up{height:5px}
-.up i{display:block;height:100%;width:0;background:#f6b73c;transition:width .2s linear}
-#upcfg{cursor:pointer}#upcfg .up{margin:0 16px;border-radius:3px}#upcfg.go .up{height:6px;margin-bottom:12px}
+#upd.go .up{height:6px}
+#upcfg .up{margin-top:12px;border-radius:3px}#upcfg.go .up{height:6px}
+.ubs{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:12px;padding:13px;border-radius:14px;background:var(--acs);color:var(--ac);font-weight:700}
+.ubs svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ubs.pri{background:var(--ac);color:var(--ac2)}
+.ubs:disabled{opacity:.6}.ubs.sp svg{animation:uspin 1s linear infinite}
 </style></head><body>
 <div class="top"><small id="td"></small><div class="tr"><h1>Asignaciones</h1>
 <button class="ic ig" id="rs" aria-label="Desbloquear todas las imágenes" data-tip="Desbloquear todas las imágenes"><svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"/></svg></button>
@@ -172,7 +185,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <button class="ic ig" id="cf" aria-label="Configuración" data-tip="Configuración"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg></button>
 </div>
 </div>
-<div class="wrap"><div id="updw"><div class="ui"><div id="upd" class="upgo" role="region" aria-label="Actualización pendiente"><svg class="uic" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#f6b73c"/><rect x="15" y="14.5" width="4" height="11" rx="2" fill="#fff"/><circle cx="17" cy="9.8" r="2.4" fill="#fff"/></svg><div class="utx"><div class="ut1">Hay una actualización pendiente.</div><div class="ut2"><button id="updgo">Descargar e instalar aquí.</button><button id="updlater">Más tarde</button></div></div><div class="up"><i class="upi"></i></div></div></div></div><div class="rb hide" id="rb"></div><label class="l" for="wk">Semana del PDF</label><select class="fld" id="wk"></select><label class="l" for="dt" style="margin-top:14px">Fecha</label><input class="fld" id="dt" inputmode="numeric" maxlength="5" enterkeyhint="next" autocomplete="off">
+<div class="wrap"><div id="updw"><div class="ui"><div id="upd" role="region" aria-label="Actualización"><div class="uh"><span class="uic"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4.5 20h15"/></svg></span><div class="utx"><div class="ut1" id="ut1"></div><div class="ut2" id="ut2"></div></div></div><div class="ua"><button id="updgo" class="ub1"></button><button id="updlater" class="ub2">Más tarde</button></div><div class="up"><i class="upi"></i></div></div></div></div><div class="rb hide" id="rb"></div><label class="l" for="wk">Semana del PDF</label><select class="fld" id="wk"></select><label class="l" for="dt" style="margin-top:14px">Fecha</label><input class="fld" id="dt" inputmode="numeric" maxlength="5" enterkeyhint="next" autocomplete="off">
 <h2><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg> Imágenes</h2><div id="th"></div><div class="none" id="none">Las imágenes aparecerán aquí cuando escribas un nombre.</div>
 <div class="tg"><label class="row"><span>Enviar mensaje de compañía</span><input type="checkbox" class="sw" id="m1"></label><label class="row"><span>Enviar segundo mensaje</span><input type="checkbox" class="sw" id="m2"></label></div><h2 style="margin-bottom:0"><svg viewBox="0 0 24 24"><g transform="translate(1.6 -2.2) scale(.88)"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75zM20.7 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75z"/></g><path d="M2.5 21.2c1.6-1.4 2.7-1.4 4.2 0s2.7 1.4 4.2 0 2.7-1.4 4.2 0 2.7 1.4 4.2 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Edición</h2><div id="secs"></div></div>
 
@@ -191,7 +204,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <button data-th="dark" aria-label="Oscuro" data-tip="Oscuro"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
 <button data-th="auto" aria-label="Predeterminado" data-tip="Predeterminado"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.8a4.2 4.2 0 000 8.4z"/><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g></svg></button></div></div>
 <div class="set"><div class="ttl">Color de la app</div><div class="cols" id="cs"></div></div>
-<div class="set hide upgo" id="upcfg" role="button" tabindex="0"><div class="row"><span class="ri"><svg viewBox="0 0 30 30" style="width:34px;height:34px"><path d="M15 4v13m0 0-5-5m5 5 5-5M6 21v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="rt"><div class="ttl">Actualización disponible</div><small id="upcv">Toca aquí para descargar e instalar la nueva versión.</small></div></div><div class="up"><i class="upi"></i></div></div>
+<div class="set hide" id="upcfg"><div class="row"><span class="ri"><svg viewBox="0 0 30 30" style="width:34px;height:34px"><path d="M15 4v13m0 0-5-5m5 5 5-5M6 21v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="rt"><div class="ttl">Actualizaciones</div><small id="upcv"></small></div></div><button class="ubs" id="upbtn"><svg id="upi1" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v4.5h-4.5"/></svg><svg id="upi2" class="hide" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4.5 20h15"/></svg><span id="upbl">Buscar actualizaciones</span></button><div class="up"><i class="upi"></i></div></div>
 <div class="set"><div class="row"><span class="ri"><svg viewBox="0 0 30 30" style="width:34px;height:34px"><rect x="4" y="3" width="22" height="11" rx="3.5" fill="currentColor"/><rect x="4" y="17" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></span><div class="rt"><div class="ttl">Pantalla dividida</div><small>Muestra el PDF en la parte de arriba mientras usas la app. Si la desactivas, el PDF se abre siempre a pantalla completa.</small></div><input type="checkbox" class="sw" id="sps"></div></div>
 <div class="set"><div class="row"><span class="ri"><svg viewBox="0 0 30 30" style="width:34px;height:34px"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/><circle cx="20.5" cy="20.5" r="8.6" style="fill:var(--sf)"/><g transform="translate(20.5 20.5) scale(.62) translate(-12 -11.5)"><path d="M18 8h-1V6a5 5 0 00-10 0v2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V10a2 2 0 00-2-2zM9 6a3 3 0 016 0v2H9z"/></g></svg></span><div class="rt"><div class="ttl">Bloquear imágenes ya compartidas</div><small>Evita compartir dos veces la misma imagen. Se desbloquea al editar su casillero.</small></div><input type="checkbox" class="sw" id="lk"></div></div>
 <button class="set rowb" id="rtn"><svg class="ri2" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><div class="rt"><div class="ttl">Calendario rotativo</div><small>Define quién envía las asignaciones cada semana.</small></div><svg class="chv" viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></button>
@@ -646,21 +659,73 @@ if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol)&&!NAT())addE
 /* ===== Actualizaciones desde GitHub (solo Android, al abrir la app) ===== */
 const UPDATE_REPO="estebanschrooh1-star/estebanschrooh1-star-asignaciones-generador-ios-apk";
 const verNum=v=>String(v).replace(/^v/i,"").split(".").map(n=>parseInt(n)||0),verGt=(a,b)=>{a=verNum(a);b=verNum(b);for(let i=0;i<3;i++)if((a[i]||0)!==(b[i]||0))return(a[i]||0)>(b[i]||0);return false};
-let upd=null,updBusy=false,updDone=false;
-const setProg=p=>$$(".upi").forEach(e=>{e.style.width=p+"%"});
-async function checkUpdate(){if(!NAT()||UPDATE_REPO.includes("TU_USUARIO"))return;
- try{const r=await fetch(`https://api.github.com/repos/${UPDATE_REPO}/releases/latest`,{headers:{Accept:"application/vnd.github+json"}});if(!r.ok)return;
-  const j=await r.json(),a=(j.assets||[]).find(x=>/\.apk$/i.test(x.name));if(!a||!verGt(j.tag_name,APP_VER))return;
-  upd={url:a.browser_download_url,ver:j.tag_name};$("#upcv").textContent="Versión "+String(j.tag_name).replace(/^v/i,"")+" lista. Toca aquí para descargar e instalar.";
-  $("#upcfg").classList.remove("hide");setTimeout(()=>$("#updw").classList.add("on"),700)}catch(x){}}
-async function instUpd(P){try{await P.install()}catch(x){toast(String(x&&x.message||x).includes("need_permission")?"Permite instalar apps desde Asignaciones y vuelve a tocar el aviso":"No se pudo abrir el instalador")}}
-async function runUpd(){if(!upd||updBusy)return;const P=Capacitor.Plugins.AppUpdate||Capacitor.registerPlugin("AppUpdate"),G=$$(".upgo");
- if(updDone)return instUpd(P);
- updBusy=true;G.forEach(e=>e.classList.add("go"));setProg(0);let h=null;
- try{h=await P.addListener("progress",e=>setProg(e.percent));await P.download({url:upd.url});updDone=true;setProg(100);await instUpd(P)}
- catch(x){toast("No se pudo descargar la actualización");G.forEach(e=>e.classList.remove("go"));setProg(0)}
- if(h)h.remove();updBusy=false}
-$("#updgo").onclick=runUpd;$("#updlater").onclick=()=>$("#updw").classList.remove("on");
-$("#upcfg").onclick=runUpd;$("#upcfg").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();runUpd()}};
-checkUpdate();
+let upd={st:"idle",url:"",ver:"",pct:0,snooze:false,done:false,busy:false};
+const updP=()=>Capacitor.Plugins.AppUpdate||Capacitor.registerPlugin("AppUpdate");
+const UPD_PEND=["avail","ready","perm","dlerr"];
+function setProg(p){upd.pct=p;$$(".upi").forEach(e=>{e.style.width=p+"%"});updUI()}
+function updUI(){
+ const s=upd.st,v=String(upd.ver||"").replace(/^v/i,"");
+ const B={
+  avail:["Nueva versión disponible","Versión "+v+" lista para descargar.","Actualizar"],
+  ready:["Actualización lista","Toca Instalar para terminar.","Instalar"],
+  down:["Descargando actualización…",upd.pct+"%",""],
+  perm:["Falta un permiso","Permite instalar apps desde Asignaciones y vuelve a tocar Instalar.","Instalar"],
+  dlerr:["No se pudo completar","Revisa tu conexión e inténtalo de nuevo.","Reintentar"],
+  sign:["No se puede instalar encima","Esta versión tiene otra firma. Desinstala la app e instala el APK una vez (se borran los datos guardados); después se actualizará sola.",""]
+ }[s];
+ if(B){$("#ut1").textContent=B[0];$("#ut2").textContent=B[1];$("#updgo").textContent=B[2];$("#updgo").classList.toggle("hide",!B[2]);$("#updlater").textContent=s==="sign"?"Entendido":"Más tarde"}
+ $("#upd").classList.toggle("go",s==="down");$("#upcfg").classList.toggle("go",s==="down");
+ $("#updw").classList.toggle("on",!!B&&!upd.snooze);
+ $("#upcv").textContent={
+  idle:"Versión instalada: "+APP_VER+". Se busca sola cada vez que abres la app.",
+  checking:"Buscando…",
+  none:"Ya tienes la última versión ("+APP_VER+").",
+  err:"No se pudo buscar. Revisa tu conexión.",
+  avail:"Hay una versión nueva: "+v+".",
+  ready:"La versión "+v+" está lista para instalar.",
+  down:"Descargando… "+upd.pct+"%",
+  perm:"Permite instalar apps desde Asignaciones y vuelve a tocar Instalar.",
+  dlerr:"No se pudo completar la actualización.",
+  sign:"Esta versión está firmada con otra clave y Android no la instala encima. Desinstala la app e instala el APK una vez (se borran los datos guardados); después se actualizará sola."
+ }[s]||"";
+ const act=UPD_PEND.includes(s),b=$("#upbtn");
+ b.classList.toggle("hide",s==="down"||s==="sign");b.classList.toggle("pri",act);b.classList.toggle("sp",s==="checking");b.disabled=s==="checking";
+ $("#upi1").classList.toggle("hide",act);$("#upi2").classList.toggle("hide",!act);
+ $("#upbl").textContent=act?(s==="avail"?"Descargar e instalar":s==="dlerr"?"Reintentar":"Instalar"):"Buscar actualizaciones";
+}
+async function checkUpdate(manual){
+ if(!NAT()||UPDATE_REPO.includes("TU_USUARIO")||upd.busy||upd.st==="checking")return;
+ if(manual){upd.st="checking";updUI()}
+ try{
+  const r=await fetch("https://api.github.com/repos/"+UPDATE_REPO+"/releases/latest",{headers:{Accept:"application/vnd.github+json"},cache:"no-store"});
+  if(!r.ok)throw new Error("http");
+  const j=await r.json(),a=(j.assets||[]).find(x=>/\.apk$/i.test(x.name));
+  if(a&&verGt(j.tag_name,APP_VER)){
+   if(upd.ver!==j.tag_name)upd.done=false;
+   Object.assign(upd,{st:upd.done?"ready":"avail",url:a.browser_download_url,ver:j.tag_name,pct:0,snooze:false});
+   manual?updUI():setTimeout(updUI,700)
+  }else if(manual){upd.st="none";updUI()}else if(upd.st==="checking"){upd.st="idle";updUI()}
+ }catch(x){if(manual){upd.st="err";updUI()}else if(upd.st==="checking"){upd.st="idle";updUI()}}
+}
+async function instUpd(P){
+ try{await P.install();upd.st="ready"}
+ catch(x){const m=String(x&&x.message||x);if(m.includes("no_file")){upd.done=false;upd.st="avail"}else upd.st=m.includes("need_permission")?"perm":"dlerr"}
+ updUI()
+}
+async function runUpd(){
+ if(upd.busy||!upd.url)return;
+ const P=updP();
+ if(upd.done)return instUpd(P);
+ upd.busy=true;upd.st="down";upd.snooze=false;setProg(0);
+ let h=null,ok=false;
+ try{h=await P.addListener("progress",e=>setProg(e.percent));await P.download({url:upd.url});upd.done=true;ok=true}
+ catch(x){upd.st=/signature/i.test(String(x&&x.message||x))?"sign":"dlerr"}
+ if(h)h.remove();
+ upd.busy=false;
+ if(ok){upd.st="ready";setProg(100);await instUpd(P)}else setProg(0)
+}
+if(NAT())$("#upcfg").classList.remove("hide");
+$("#updgo").onclick=runUpd;$("#updlater").onclick=()=>{upd.snooze=true;updUI()};
+$("#upbtn").onclick=()=>UPD_PEND.includes(upd.st)?runUpd():checkUpdate(true);
+updUI();checkUpdate();
 </script><div id="phint">Desliza el visor hacia abajo para ver el PDF en pantalla completa.</div></body></html>

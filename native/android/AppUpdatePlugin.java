@@ -2,6 +2,10 @@ package __PACKAGE__;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.content.pm.SigningInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -48,6 +52,7 @@ public class AppUpdatePlugin extends Plugin {
                         }
                     }
                 }
+                if (!sameSigner(f)) { f.delete(); call.reject("signature_mismatch"); return; }
                 call.resolve();
             } catch (Exception e) {
                 call.reject(e.getMessage() == null ? "error" : e.getMessage());
@@ -55,6 +60,31 @@ public class AppUpdatePlugin extends Plugin {
                 if (c != null) c.disconnect();
             }
         }).start();
+    }
+
+    /** Android no instala una APK encima de otra si la firma es distinta: lo detectamos antes de abrir el instalador. */
+    private boolean sameSigner(File apk) {
+        try {
+            PackageManager pm = getContext().getPackageManager();
+            int flag = Build.VERSION.SDK_INT >= 28 ? PackageManager.GET_SIGNING_CERTIFICATES : PackageManager.GET_SIGNATURES;
+            Signature[] a = signers(pm.getPackageArchiveInfo(apk.getAbsolutePath(), flag));
+            Signature[] b = signers(pm.getPackageInfo(getContext().getPackageName(), flag));
+            if (a == null || b == null || a.length == 0 || b.length == 0) return true; // no se puede saber: decide Android
+            for (Signature x : a) for (Signature y : b) if (x.equals(y)) return true;
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
+    private Signature[] signers(PackageInfo p) {
+        if (p == null) return null;
+        if (Build.VERSION.SDK_INT >= 28) {
+            SigningInfo si = p.signingInfo;
+            if (si == null) return null;
+            return si.hasMultipleSigners() ? si.getApkContentsSigners() : si.getSigningCertificateHistory();
+        }
+        return p.signatures;
     }
 
     @PluginMethod
