@@ -88,7 +88,9 @@ if (!xml.includes("android.intent.action.SEND")) {
   if (!xml.includes("</activity>")) { console.error("No encontré <activity> en AndroidManifest.xml"); process.exit(1); }
   xml = xml.replace("</activity>", filter + "</activity>");
 }
-if (!/android:screenOrientation=/.test(xml)) xml = xml.replace(/(<activity\b)/, '$1 android:screenOrientation="portrait"');
+if (/android:screenOrientation=/.test(xml)) xml = xml.replace(/android:screenOrientation="[^"]*"/, 'android:screenOrientation="fullUser"');
+else xml = xml.replace(/(<activity\b)/, '$1 android:screenOrientation="fullUser"');
+if (!/android:configChanges=/.test(xml)) xml = xml.replace(/(<activity\b)/, '$1 android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|screenLayout|uiMode|locale"');
 if (!/android:launchMode=/.test(xml)) xml = xml.replace(/(<activity\b)/, '$1 android:launchMode="singleTask"');
 if (!xml.includes("REQUEST_INSTALL_PACKAGES")) xml = xml.replace(/<application\b/, '<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />\n    <application');
 fs.writeFileSync(mf, xml);

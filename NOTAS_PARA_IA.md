@@ -24,4 +24,7 @@ App "Asignaciones": web (PWA) + Android (Capacitor). Todo el código de la app e
 ## No cambiar
 - `resources/signing/debug.keystore`: la firma fija permite instalar actualizaciones encima de la app anterior.
 - El repositorio debe seguir siendo público (la app lee los Releases sin iniciar sesión).
-- La rotación de pantalla está bloqueada en vertical y el texto de los menús no se puede seleccionar (a propósito).
+- El texto de los menús no se puede seleccionar (a propósito).
+- La app gira (vertical y horizontal): en horizontal/monitores se agrega la clase `ls` a `<html>`. El visor PDF en pantalla dividida queda a la derecha (45 %) y el menú a la izquierda; en vertical sigue arriba (1/3). Los bloqueos de rotación se quitaron de `manifest.webmanifest`, `scripts/android-native.js` (`fullUser`) y del JS.
+- Selector de semana del PDF: tarjeta con la semana sugerida (la que empieza el próximo lunes), semanas pasadas en gris y aviso si no es la próxima. Cada semana guarda su inicio (`st`); los PDF guardados antes se calculan desde el jueves (`th`).
+- El color de la app es siempre azul (se quitó el selector de colores). Al abrir Configuración se oculta el splitscreen y se vuelve a abrir al cerrarla.
