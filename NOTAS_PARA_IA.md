@@ -15,6 +15,11 @@ App "Asignaciones": web (PWA) + Android (Capacitor). Todo el código de la app e
 - Para que exista un Release: Actions → Compilar APK y publicar PWA → Run workflow → marcar "Publicar".
   Sin Release nuevo, la app no tiene nada que detectar.
 - La descarga/instalación la hace el plugin nativo `native/android/AppUpdatePlugin.java`.
+- En Configuración hay una tarjeta "Actualizaciones" con el botón **Buscar actualizaciones** (solo en Android).
+- **Firma fija**: `scripts/android-native.js` obliga a firmar con `resources/signing/debug.keystore` y el workflow verifica
+  la huella del APK (paso "Verificar la firma del APK"). Android no instala un APK encima de otro con distinta firma
+  ("package conflicts with an existing package"); el plugin lo detecta antes de abrir el instalador y la app avisa.
+  Nunca cambiar ni borrar ese keystore.
 
 ## No cambiar
 - `resources/signing/debug.keystore`: la firma fija permite instalar actualizaciones encima de la app anterior.

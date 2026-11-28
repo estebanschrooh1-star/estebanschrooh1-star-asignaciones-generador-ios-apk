@@ -102,6 +102,24 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
+      # Candado: si el APK no lleva la clave fija, se corta aquí en vez de publicar algo que no se pueda actualizar
+      - name: Verificar la firma del APK
+        env:
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+        run: |
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          KS="$(keytool -list -v -keystore resources/signing/debug.keystore -storepass android 2>/dev/null)"
+          EXPECTED="$(awk '/SHA256:/{print $2; exit}' <<< "$KS" | tr -d ':' | tr 'A-F' 'a-f')"
+          APKSIGNER="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/*/apksigner | sort -V | tail -n 1)"
+          OUT="$("$APKSIGNER" verify --print-certs "$APK")"
+          ACTUAL="$(awk '/SHA-256 digest/{print $NF; exit}' <<< "$OUT")"
+          echo "Firma esperada: $EXPECTED"
+          echo "Firma del APK:  $ACTUAL"
+          if [ -z "$EXPECTED" ] || [ "$EXPECTED" != "$ACTUAL" ]; then
+            echo "::error::El APK no está firmado con resources/signing/debug.keystore."
+            exit 1
+          fi
+
       - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
